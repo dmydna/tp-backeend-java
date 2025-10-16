@@ -1,0 +1,39 @@
+package com.techlab.cliente;
+
+public class Cliente {
+    private String nombre;
+    private String email;
+    private int id;
+
+    public static int cantidadClientes = 0;
+
+    public  Cliente(String nombre, String email){
+        this.nombre = nombre;
+        this.email = email;
+        this.id = cantidadClientes;
+        this.cantidadClientes++;
+    }
+
+    public String getNombre(){
+        return this.nombre;
+    }
+
+    public String getEmail(){
+        return this.email;
+    }
+
+    public void setEmail(String email){
+        if(email.contains("@")){
+            this.email = email;
+        }
+    }
+
+    public void setNombre(String nombre){
+        this.nombre = nombre;
+    }
+
+
+    public int getID() {
+        return this.id;
+    }
+}
