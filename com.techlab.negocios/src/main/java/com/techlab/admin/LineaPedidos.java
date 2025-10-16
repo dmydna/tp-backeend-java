@@ -1,6 +1,7 @@
 package com.techlab.admin;
 
 import com.techlab.cliente.Cliente;
+import com.techlab.excepciones.NotEncotradoException;
 import com.techlab.excepciones.ProductoNotEncotradoException;
 import com.techlab.pedido.Pedido;
 import com.techlab.productos.Producto;
@@ -22,7 +23,7 @@ public class LineaPedidos {
         mostrarPedidos(p -> p.getCliente().getNombre().equals(nombre));
     }
 
-    public void imprimirTodosLosPedido(){
+    public void imprimirTodosLosPedidos(){
         mostrarPedidos(p->true);
     }
 
@@ -52,16 +53,16 @@ public class LineaPedidos {
         }
     }
 
-    public Pedido buscarPorID(int Id) throws ProductoNotEncotradoException {
+    public Pedido buscarPorID(int Id) throws NotEncotradoException {
         for(Pedido p : this.pedidos){
             if(Id == p.getID()) {
                 return p;
             }
         }
-        throw new ProductoNotEncotradoException("Pedido con Id: " + Id + " no encontrado.");
+        throw new NotEncotradoException("Pedido con Id: " + Id + " no encontrado.");
     }
 
-    public void listarProductosEnPedido(int id) throws ProductoNotEncotradoException {
+    public void listarProductosEnPedido(int id) throws NotEncotradoException {
 
         Pedido pedido = buscarPorID(id);
         System.out.printf("%-15s %-15s %-15s %-15s\n",
@@ -71,7 +72,7 @@ public class LineaPedidos {
                 System.out.printf("%-15s %-15s %-15d %-15s\n",
                         p.getID(),
                         p.tipo,
-                        p.getCantidadEnStock(),
+                        pedido.cantidadDeUnProductosID(p.getID()),
                         p.getNombre());
 
         }

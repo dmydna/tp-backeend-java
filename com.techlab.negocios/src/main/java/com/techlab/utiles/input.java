@@ -15,7 +15,7 @@ public class input {
     }
 
     public static int inputCantidad(){
-        System.out.print("Ingresa Stock: ");
+        System.out.print("Ingresa Cantidad: ");
         return Integer.parseInt(sc.nextLine().trim());
     }
 
@@ -35,7 +35,7 @@ public class input {
     }
 
     public static void inputContinuar() {
-        System.out.println("Presiona [ENTER] para continuar...");
+        System.out.println("\nPresiona [ENTER] para continuar...\n");
         sc.nextLine();
     }
 

@@ -1,6 +1,7 @@
 package com.techlab.utiles;
 
 import com.techlab.cliente.Cliente;
+import com.techlab.excepciones.NotEncotradoException;
 import com.techlab.excepciones.ProductoNotEncotradoException;
 import com.techlab.pedido.Pedido;
 import com.techlab.productos.Producto;
@@ -17,7 +18,7 @@ public class inputPedidos {
 
 
     // crea un pedido vacio
-    public static  void crearPedidoMenu() throws ProductoNotEncotradoException {
+    public static  void crearPedidoMenu() throws NotEncotradoException {
         System.out.println("""
                 Crear Pedido:
                 ----------------
@@ -38,45 +39,82 @@ public class inputPedidos {
     }
 
 
-    public static void option_crearCliente() throws ProductoNotEncotradoException {
-        inputArmarPedido(inputRegistrarCliente());
+    public static boolean confirmarPedidoMenu(){
+        boolean salir = false;
+        while (!salir){
+            String bloque = """
+                1) Listar Productos
+                2) Agregar Productos al Pedido
+                
+                0) Salir
+                """;
+            System.out.println(bloque);
+            String seleccion = (sc.nextLine().trim());
+
+            switch (seleccion){
+                case "1":
+                    menu_opcion2();
+                    salir = inputConfirmar("Agregar un producto al pedido?");
+                    break;
+                case "2": salir = true; break;
+                default:
+                    return false;
+            }
+        }
+        return  true;
+
     }
 
-    public static void option_buscarCliente() throws ProductoNotEncotradoException {
-        inputArmarPedido(inputBuscarCliente());
+    public static void option_crearCliente() {
+            Cliente c = inputRegistrarCliente();
+            c.mostrarInformacion();
+            inputContinuar();
+            inputArmarPedido(c);
+    }
+
+    public static void option_buscarCliente(){
+        try{
+            Cliente c = inputBuscarCliente();
+            c.mostrarInformacion();
+            inputContinuar();
+            inputArmarPedido(c);
+        }catch (NotEncotradoException e){
+            System.out.println(e.getMessage());
+        }finally {
+            System.out.println("Operacion finalizada...");
+        }
+
+
     }
 
 
     // agrega productos al pedido
-    public static void inputArmarPedido(Cliente c) throws ProductoNotEncotradoException {
+    public static void inputArmarPedido(Cliente c) {
 
+        if(!confirmarPedidoMenu()){
+            return;
+        }
         Pedido pedido = new Pedido(c);
         Producto producto;
         int cantidad;
         Boolean respuesta;
+        Boolean salir;
 
-        menu_opcion2(); // Listar Productos
-
-        if(catalogo.cantidadProductos == 0){
-            inputContinuar();
-            return;
-        }
-        System.out.println("Agregar Productos Al Pedido:\n");
-
-        Boolean salir= false;
+        salir= false;
         while (!salir){
-            producto = inputBuscarProducto();
-            respuesta = inputConfirmar("agregar al pedido?");
-            if(respuesta){
-                cantidad = inputCantidad();
-                pedido.agregarProducto(producto, cantidad);
-                System.out.println("\nAgregado con exito...\n");
-            }
-            respuesta = inputConfirmar("agregar otro producto?");
-
+                try{
+                    producto = inputBuscarProducto();
+                    cantidad = inputCantidad();
+                    pedido.agregarProducto(producto, cantidad);
+                    System.out.println("\nOperacion exitosa...\n");
+                }catch (ProductoNotEncotradoException e){
+                    System.out.println(e.getMessage());
+                }
+            respuesta = inputConfirmar("Agregar otro producto?");
             salir=!respuesta;
         }
 
+        pedidos.agregar(pedido);
 
     }
 
@@ -90,7 +128,7 @@ public class inputPedidos {
         return c;
     }
 
-    public static Cliente inputBuscarCliente() throws ProductoNotEncotradoException {
+    public static Cliente inputBuscarCliente() throws NotEncotradoException {
         int Id = inputId();
         return clientes.buscarPorID(Id);
     }

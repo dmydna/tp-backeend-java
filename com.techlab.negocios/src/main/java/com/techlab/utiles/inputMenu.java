@@ -1,6 +1,7 @@
 package com.techlab.utiles;
 
 import com.techlab.cliente.Cliente;
+import com.techlab.excepciones.NotEncotradoException;
 import com.techlab.excepciones.ProductoNotEncotradoException;
 import com.techlab.pedido.Pedido;
 import com.techlab.productos.Bebida;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import static com.techlab.app.Main.*;
+import static com.techlab.utiles.input.inputContinuar;
 import static com.techlab.utiles.input.inputId;
 import static com.techlab.utiles.inputPedidos.*;
 import static com.techlab.utiles.inputProductos.*;
@@ -20,10 +22,8 @@ import static java.lang.Integer.parseInt;
 
 public class inputMenu {
 
-    public  static void menu() throws ProductoNotEncotradoException {
+    public  static void menu()  {
         String bloque = """
-        
-        0) Agregar Muestra
         
         1) Agregar producto
         2) Listar productos
@@ -32,8 +32,9 @@ public class inputMenu {
         5) Crear un pedido
         6) Listar pedidos
         7) Ver Pedido
+        8) [Agregar Muestra]
         
-        8) Salir
+        0) Salir
         Elija una opción:
         """;
 
@@ -45,7 +46,7 @@ public class inputMenu {
             String respuesta = sc.nextLine().trim();
 
             switch (respuesta){
-                case "0":  menu_opcion0();break; // Datos de Prueba
+                case "8":  menu_opcion8();break; // Agregar Muestra
                 case "1":  menu_opcion1();break; // Agregar producto
                 case "2":  menu_opcion2();break; // Listar productos
                 case "3":  menu_opcion3();break; // Buscar/Actualizar producto
@@ -53,14 +54,13 @@ public class inputMenu {
                 case "5":  menu_opcion5();break; // Crear un pedido
                 case "6":  menu_opcion6();break; // Listar pedidos
                 case "7":  menu_opcion7();break; // Ver Pedido
-                case "8":  salir = true;break;
+                case "0":  salir = true;break;
             }
         }
     }
 
     // Agregar productos
     public static void menu_opcion1() {
-        Scanner sc = new Scanner(System.in);
         String bloque = """
                 Agregar Producto:
                 -----------------
@@ -89,10 +89,11 @@ public class inputMenu {
         \n""");
         catalogo.listarProductos(p->true);
         System.out.println("\n");
+        inputContinuar();
     }
 
     /* Buscar/Actualizar producto */
-    public static void menu_opcion3() throws ProductoNotEncotradoException {
+    public static void menu_opcion3() {
         Scanner sc = new Scanner(System.in);
         String bloque = """
                 Buscar/Actualizar producto:
@@ -116,29 +117,53 @@ public class inputMenu {
 
 
     //Eliminar producto
-    public static void menu_opcion4() throws ProductoNotEncotradoException {
-        Producto p = inputBuscarProducto();
-        catalogo.quitarProducto(p.getID());
+    public static void menu_opcion4() {
+        try {
+            Producto p = inputBuscarProducto();
+            catalogo.quitarProducto(p.getID());
+            System.out.println("Se elimino el producto: " + p.getNombre() );
+        }catch (ProductoNotEncotradoException e){
+            System.out.println(e.getMessage());
+        }finally {
+            System.out.println("Operacion finalizada...");
+            inputContinuar();
+        }
+
+
     }
 
     // Crear un pedido
-    public static void menu_opcion5() throws ProductoNotEncotradoException {
-        crearPedidoMenu();
+    public static void menu_opcion5(){
+
+        try{
+            crearPedidoMenu();
+        }catch (NotEncotradoException e){
+            System.out.println(e.getMessage());
+        }
+
     }
 
     // Listar pedidos
     public static void menu_opcion6() {
         pedidos.listarPedidos(p->true);
+        inputContinuar();
     }
 
-    public  static void menu_opcion7(){
-        int iD = inputId();
-        Pedido pedido = pedidos.listarPedidos(p->p.getID() == iD);
-
+    // Ver Pedido
+    public  static void menu_opcion7() {
+       try{
+           int iD = inputId();
+           pedidos.listarProductosEnPedido(iD);
+       }catch (NotEncotradoException e){
+           System.out.println(e.getMessage());
+        }finally{
+           System.out.println("Operacion finalizada...");
+           inputContinuar();
+       }
     }
-    public static void menu_opcion0(){
 
-        System.out.println("Muestra agregada con existo....\n");
+    // Agregar Muestra
+    public static void menu_opcion8(){
 
         ArrayList<Producto> list_productos = new ArrayList<>();
         ArrayList<Cliente> list_clientes = new ArrayList<>();
@@ -190,5 +215,15 @@ public class inputMenu {
 
         list_pedidos.addAll(List.of(pedido1_adrian, pedido1_juan, pedido2_juan, pedido1_sofi, pedido1_pedro));
         registrarPedidos(list_pedidos);
+
+        System.out.println("Muestra agregada con existo....\n");
+        System.out.printf("productos agregados: %d\nclientes agregados: %d\npedido agregados: %d\n",
+                catalogo.cantidadProductos,
+                clientes.cantidadClientes,
+                pedidos.cantidadPedidos
+        );
+
+        inputContinuar();
+
     }
 }

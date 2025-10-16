@@ -1,6 +1,7 @@
-package com.techlab.main;
+package com.techlab.admin;
 
 import com.techlab.excepciones.ProductoNotEncotradoException;
+import com.techlab.excepciones.StockInsuficienteException;
 import com.techlab.productos.Producto;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public class Carrito {
     public int total; // precio en total 
     public int cantidadTotal; // cantidad total de productos en carrito
 
-    public void agregarProducto(Producto p, int cantidad){
+    public void agregarProducto(Producto p, int cantidad) throws StockInsuficienteException {
         if(p.getCantidadEnStock() == 0 ||
            cantidad >= p.getCantidadEnStock()){
             return;

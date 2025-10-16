@@ -1,6 +1,7 @@
 package com.techlab.admin;
 
 import com.techlab.cliente.Cliente;
+import com.techlab.excepciones.NotEncotradoException;
 import com.techlab.excepciones.ProductoNotEncotradoException;
 import com.techlab.productos.Producto;
 
@@ -17,13 +18,13 @@ public class LineaClientes {
     }
 
 
-    public Cliente buscarPorID(int Id) throws ProductoNotEncotradoException {
+    public Cliente buscarPorID(int Id) throws NotEncotradoException {
         for(Cliente c : this.clientes){
             if(Id == c.getID()) {
                 return c;
             }
         }
-        throw new ProductoNotEncotradoException("Cliente con Id: " + Id + " no encontrado.");
+        throw new NotEncotradoException("Cliente con Id: " + Id + " no encontrado.");
     }
 
     public void listarClientes(Predicate<Cliente> filtro) {

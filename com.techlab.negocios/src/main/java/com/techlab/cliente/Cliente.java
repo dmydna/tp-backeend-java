@@ -32,6 +32,16 @@ public class Cliente {
         this.nombre = nombre;
     }
 
+    public void mostrarInformacion(){
+        System.out.printf("%-15s %-15s %-15s\n",
+                "ID", "NOMBRE", "EMAIL");
+        System.out.println("---------------------------------------------");
+        System.out.printf("%-15d %-15s %-15s\n",
+                this.id,
+                this.nombre,
+                this.email
+        );
+    }
 
     public int getID() {
         return this.id;

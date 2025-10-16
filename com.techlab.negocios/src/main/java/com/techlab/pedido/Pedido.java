@@ -1,5 +1,6 @@
 package com.techlab.pedido;
 
+import com.techlab.excepciones.StockInsuficienteException;
 import com.techlab.productos.Producto;
 import com.techlab.cliente.Cliente;
 
@@ -10,12 +11,27 @@ import java.util.stream.Collectors;
 
 public class Pedido {
 
+    // TODO Pasar a HashMap <id, ?<Cantidad c, Producto p>>
+    // fix
+    public class infoProducto {
+        // cantidad de producto en pedido
+        public   int id;
+        public   int cantidad;
+
+        public infoProducto(int id, int cantidad){
+            this.cantidad = cantidad;
+            this.id = id;
+        }
+    }
+
     public enum state {
         PROCESANDO,
         COMPLETO,
     }
 
     private ArrayList<Producto> productos;
+    private ArrayList<infoProducto> infoProductos = new ArrayList<>();
+
     private Cliente cliente;
     private int id = 0;
     public state estado;
@@ -30,30 +46,39 @@ public class Pedido {
         this.cantidadPedidos ++;
     }
 
+    public ArrayList<Producto> getProductos(){
+        return this.productos;
+    }
+
+    public ArrayList<infoProducto> getInfoProductos(){
+        return this.infoProductos;
+    }
     public Cliente getCliente() {
         return this.cliente;
     }
 
-    public ArrayList<Producto> getProductos(){
-        return this.productos;
+    public int cantidadDeUnProductosID(int Id){
+
+        for(infoProducto i : this.infoProductos ){
+            if(i.id == Id){
+                return i.cantidad;
+            }
+        }
+
+        return 0;
     }
     public int cantidadProductos(){
         return this.productos.size();
     }
 
     public void agregarProducto(Producto p, int cantidad){
-        if(cantidad < 0){
-            System.out.println("Error: cantidad negativa.");
-            return;
+        try{
+            int stock = p.descontarStock(cantidad);
+            this.infoProductos.add(new infoProducto(p.getID(), stock));
+            productos.add(p);
+        }catch (StockInsuficienteException e){
+            System.out.println(e.getMessage());
         }
-        int Stock = p.getCantidadEnStock();
-        Stock -= cantidad;
-        if(Stock < 0){
-            System.out.println("Error: cantidad supera stock disponible.");
-            return;
-        }
-        p.setCantidadEnStock(Stock);
-        productos.add(p);
     }
 
     public double calcularTotal(){

@@ -9,6 +9,7 @@ import com.techlab.productos.Producto;
 
 public class CatalogoProductos {
 
+    // TODO pasar a Hashmap <int id, Producto p>
     private ArrayList<Producto> productos = new ArrayList<>();
     public int cantidadProductos = 0;
 
@@ -40,7 +41,7 @@ public class CatalogoProductos {
                 return p;
             }
         }
-        throw new ProductoNotEncotradoException("Producto con Id: " + Id + " no encontrado.");
+        throw new ProductoNotEncotradoException("Producto con Id " + Id + " no encontrado.");
     }
 
     private void actualizarPorID(int Id, Consumer<Producto> accion){
@@ -68,11 +69,11 @@ public class CatalogoProductos {
     public void listarProductos(Predicate<Producto> filtro) {
         int i = 0;
         if(this.cantidadProductos == 0){
-            System.out.println("\nNo hay productos...agrega alguno!\n");
+            System.out.println("\nNo se encontraron Productos...\n");
             return;
         }
         System.out.printf("%-15s %-15s %-15s %-15s\n",
-                "ID", "TIPO", "CANTIDAD", "NOMBRE");
+                "ID", "TIPO", "STOCK", "NOMBRE");
         System.out.println("----------------------------------------------------------------");
         for (Producto p : this.productos) {
             if (filtro.test(p)) {

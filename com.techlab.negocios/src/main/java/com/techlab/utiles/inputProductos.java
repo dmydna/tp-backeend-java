@@ -1,5 +1,6 @@
 package com.techlab.utiles;
 
+import com.techlab.excepciones.NotValidValueException;
 import com.techlab.excepciones.ProductoNotEncotradoException;
 import com.techlab.productos.Bebida;
 import com.techlab.productos.Coffee;
@@ -7,6 +8,8 @@ import com.techlab.productos.Producto;
 import com.techlab.productos.Te;
 
 import java.util.ArrayList;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import static com.techlab.app.Main.catalogo;
 import static com.techlab.utiles.input.*;
@@ -15,14 +18,29 @@ import static java.lang.Integer.parseInt;
 public class inputProductos {
 
 
-    public static void opcion_buscarProducto() throws ProductoNotEncotradoException {
-       Producto p = inputBuscarProducto() ;
-       p.mostrarInformacion();
+    public static void opcion_buscarProducto()  {
+        try {
+            Producto p = inputBuscarProducto() ;
+            p.mostrarInformacion();
+        } catch (ProductoNotEncotradoException e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            System.out.println("Operación de búsqueda finalizada");
+            inputContinuar();
+        }
+
     }
 
-    public static void opcion_actualizarProducto() throws ProductoNotEncotradoException {
-       Producto p = inputActualizarProducto();
-       p.mostrarInformacion();
+    public static void opcion_actualizarProducto()  {
+        try {
+            Producto p = inputActualizarProducto();
+            p.mostrarInformacion();
+        } catch (ProductoNotEncotradoException e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            System.out.println("Operación de búsqueda finalizada");
+            inputContinuar();
+        }
     }
 
 
@@ -48,12 +66,15 @@ public class inputProductos {
     }
 
 
-    public static Producto inputCrearProducto(String producto) {
+    public static Producto inputCrearProducto(String producto) throws NotValidValueException {
 
         String nombre = inputNombre();
         double precio = inputPrecio();
         int stock     = inputStock();
         int litros    = inputLitros();
+
+        if(precio<0 || stock <0 || litros <0)
+            throw new NotValidValueException("Se ingresaron valores no validos o negativos");
 
         Producto p = null;
         switch (producto){
@@ -67,17 +88,23 @@ public class inputProductos {
     }
 
 
+
     public static void inputRegistarProducto(String producto){
-        Producto p = inputCrearProducto(producto);
-        String mensaje = producto + " regitrado con exito...";
-        if(p != null){
+
+        try{
+            Producto p = inputCrearProducto(producto);
             catalogo.agregarProducto(p);
             System.out.println("\n");
             p.mostrarInformacion();
             System.out.println("\n");
-            System.out.println(mensaje);
+            System.out.println(producto + " regitrado con exito...");
+        }catch (NotValidValueException e){
+            System.out.println("Error:" + e.getMessage());
+            System.out.println("No registro ningun producto.");
+        }finally {
             inputContinuar();
         }
+
     }
 
 

@@ -1,6 +1,8 @@
 package com.techlab.productos;
 
 import com.techlab.excepciones.ProductoNotEncotradoException;
+import com.techlab.excepciones.StockInsuficienteException;
+import com.techlab.pedido.Pedido;
 
 public  abstract class Producto {
 
@@ -8,7 +10,7 @@ public  abstract class Producto {
     private String nombre;
     private double precio;
     private int cantidadEnStock;
-    private int id;
+    private int id;     // TODO clase catologo tiene que asignar IDs
 
     static int cantidadProductosCreados = 0;
 
@@ -59,8 +61,18 @@ public  abstract class Producto {
         }
     }
 
-    public void descontarStock(int cantidad){
+    public int descontarStock(int cantidad) throws StockInsuficienteException {
+        if(cantidad < 0){
+            System.out.println("Error: cantidad negativa.");
+            return this.cantidadEnStock;
+        }
+        int Stock = this.getCantidadEnStock();
+        if(Stock - cantidad == 0){
+            System.out.println("Error: cantidad supera stock disponible.");
+            throw new StockInsuficienteException("Error: stock insuficiente");
+        }
         this.cantidadEnStock -= cantidad;
+        return this.cantidadEnStock;
     }
 
     public static double calcularImpuestos(double precio){
@@ -68,15 +80,18 @@ public  abstract class Producto {
     }
 
     public void mostrarInformacion(){
-        System.out.printf("Producto: %s, \n precio: %f \n stock: %d",
-                           this.nombre,
+        System.out.printf("%-15s %-15s %-15s %-15s %-15s\n",
+                "ID", "TIPO", "PRECIO", "STOCK", "NOMBRE");
+        System.out.println("-------------------------------------------------------------------------------");
+        System.out.printf("%-15d %-15s %-15f %-15d %-15s\n",
+                           this.id,
+                           this.tipo,
                            this.precio,
-                           this.cantidadEnStock);
+                           this.cantidadEnStock,
+                           this.nombre
+        );
     }
 
-    public void buscarProductoPorNombre() throws ProductoNotEncotradoException {
-        throw new ProductoNotEncotradoException("El producto 'X' no existe.");
-    }
 
 }
 
