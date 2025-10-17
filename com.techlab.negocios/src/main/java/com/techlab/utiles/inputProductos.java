@@ -3,13 +3,11 @@ package com.techlab.utiles;
 import com.techlab.excepciones.NotValidValueException;
 import com.techlab.excepciones.ProductoNotEncotradoException;
 import com.techlab.productos.Bebida;
-import com.techlab.productos.Coffee;
+import com.techlab.productos.Cafe;
 import com.techlab.productos.Producto;
 import com.techlab.productos.Te;
 
 import java.util.ArrayList;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 import static com.techlab.app.Main.catalogo;
 import static com.techlab.utiles.input.*;
@@ -78,7 +76,7 @@ public class inputProductos {
 
         Producto p = null;
         switch (producto){
-            case "Cafe": p = (new Coffee(nombre, precio, stock,litros)); break;
+            case "Cafe": p = (new Cafe(nombre, precio, stock,litros)); break;
             case "Te": p = (new Te(nombre, precio, stock, litros)); break;
             case "Bebida":
                 default: p = (new Bebida(nombre, precio, stock, litros));

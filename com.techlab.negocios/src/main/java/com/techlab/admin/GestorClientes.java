@@ -2,13 +2,11 @@ package com.techlab.admin;
 
 import com.techlab.cliente.Cliente;
 import com.techlab.excepciones.NotEncotradoException;
-import com.techlab.excepciones.ProductoNotEncotradoException;
-import com.techlab.productos.Producto;
 
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
-public class LineaClientes {
+public class GestorClientes {
     private ArrayList<Cliente> clientes = new ArrayList<>();
     public static int cantidadClientes = 0;
 

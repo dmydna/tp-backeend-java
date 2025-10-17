@@ -1,16 +1,13 @@
 package com.techlab.admin;
 
-import com.techlab.cliente.Cliente;
 import com.techlab.excepciones.NotEncotradoException;
-import com.techlab.excepciones.ProductoNotEncotradoException;
 import com.techlab.pedido.Pedido;
 import com.techlab.productos.Producto;
 
 import java.util.ArrayList;
-import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public class LineaPedidos {
+public class GestorPedidos {
     private ArrayList<Pedido> pedidos = new ArrayList<>();
     public static int cantidadPedidos = 0;
 

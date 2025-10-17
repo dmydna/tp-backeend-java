@@ -1,6 +1,7 @@
 package com.techlab.cliente;
 
 public class Cliente {
+
     private String nombre;
     private String email;
     private int id;

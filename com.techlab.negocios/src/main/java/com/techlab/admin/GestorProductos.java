@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 import com.techlab.excepciones.ProductoNotEncotradoException;
 import com.techlab.productos.Producto;
 
-public class CatalogoProductos {
+public class GestorProductos {
 
     // TODO pasar a Hashmap <int id, Producto p>
     private ArrayList<Producto> productos = new ArrayList<>();

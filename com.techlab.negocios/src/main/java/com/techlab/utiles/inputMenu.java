@@ -5,7 +5,7 @@ import com.techlab.excepciones.NotEncotradoException;
 import com.techlab.excepciones.ProductoNotEncotradoException;
 import com.techlab.pedido.Pedido;
 import com.techlab.productos.Bebida;
-import com.techlab.productos.Coffee;
+import com.techlab.productos.Cafe;
 import com.techlab.productos.Producto;
 import com.techlab.productos.Te;
 
@@ -169,8 +169,8 @@ public class inputMenu {
         ArrayList<Cliente> list_clientes = new ArrayList<>();
         ArrayList<Pedido> list_pedidos = new ArrayList<>();
 
-        Producto cafe_1 = new Coffee("Expresso Fuerte", 22.99, 15, 250);
-        Producto cafe_2 = new Coffee("Late Suave", 18.50, 80, 750);
+        Producto cafe_1 = new Cafe("Expresso Fuerte", 22.99, 15, 250);
+        Producto cafe_2 = new Cafe("Late Suave", 18.50, 80, 750);
         Producto te_1 = new Te("Te Chai Especiado", 10.75, 45, 500);
         Producto te_2 = new Te("Te Blanco Premium", 35.00, 10, 500);
         Producto bebida_1 = new Bebida("Agua Mineral", 3.50, 120, 1000);
