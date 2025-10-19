@@ -1,0 +1,95 @@
+package com.input;
+
+import static com.Main.sc;
+
+public class inputOld {
+
+    // Códigos ANSI para colores de texto
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+
+
+    public static void printWarning(String mensaje){
+        System.out.println("\n" + ANSI_RED + mensaje + ANSI_RESET);
+    }
+
+
+    public static void printSuccess(String mensaje){
+        System.out.println("\n" + ANSI_GREEN + mensaje + ANSI_RESET);
+    }
+
+    public static void printInfo(String mensaje){
+        System.out.println("\n" + ANSI_BLUE + mensaje + ANSI_RESET);
+    }
+
+    public static void printAttention(String mensaje){
+        System.out.println("\n" + ANSI_YELLOW + mensaje + ANSI_RESET);
+    }
+
+
+    public static int inputLitros(){
+        System.out.print("Ingresa Litros: ");
+        return Integer.parseInt(sc.nextLine().trim());
+    }
+
+    public static int inputStock(){
+        System.out.print("Ingresa Stock: ");
+        return Integer.parseInt(sc.nextLine().trim());
+    }
+
+
+
+
+    public static int inputCantidad(){
+        System.out.print("Ingresa Cantidad: ");
+        return Integer.parseInt(sc.nextLine().trim());
+    }
+
+    public static double inputPrecio(){
+        System.out.print("Ingresa Precio: ");
+        return Double.parseDouble(sc.nextLine().trim());
+    }
+
+    public static String inputNombre(){
+        System.out.print("Ingresa Nombre: ");
+        return (sc.nextLine().trim());
+    }
+
+    public static String inputEmail(){
+        System.out.print("Ingresa Email: ");
+        return (sc.nextLine().trim());
+    }
+
+    public static void inputContinuar() {
+        System.out.println("\nPresiona [ENTER] para continuar...\n");
+        sc.nextLine();
+    }
+
+    public  static boolean inputConfirmar(String mensaje){
+        System.out.println(mensaje + " s/n:");
+        String entrada = (sc.nextLine().trim());
+        return  entrada.equals("s");
+    }
+
+    public static void limpiarConsola() {
+        for (int i = 0; i < 50; i++) {
+            System.out.println();
+        }
+    }
+
+    public static  void inputClear(){
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
+
+
+
+    public static int inputId(){
+        System.out.print("Ingresa Id: ");
+        return Integer.parseInt(sc.nextLine().trim());
+    }
+}

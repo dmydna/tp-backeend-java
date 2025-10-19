@@ -1,0 +1,84 @@
+package com.input;
+
+import com.admin.GestorClientes;
+import com.cliente.Cliente;
+import com.excepciones.NotEncotradoException;
+
+import java.util.ArrayList;
+import java.util.function.Predicate;
+
+import static com.Main.*;
+import static com.input.inputPedidos.armarPedidoPorInput;
+import static com.input.input.*;
+
+public class inputClientes {
+
+    public static void buscarCliente(){
+        try{
+            Cliente c = buscarClientePorInput();
+            c.mostrarInformacion();
+            pausarConsola();
+            armarPedidoPorInput(c);
+        }catch (NotEncotradoException e){
+            printWarning(e.getMessage());
+            pausarConsola();
+        }finally {
+            printInfo("Operacion  finalizada...");
+        }
+    }
+
+    public static Cliente registrarClientePorInput(){
+        String nombre = inputNombre();
+        String email = inputEmail();
+
+        Cliente c = new Cliente(nombre, email);
+        clientes.agregar(c);
+        printSuccess("Cliente registrado con exito...");
+        return c;
+    }
+
+
+    public static void listarClientes(Predicate<Cliente> filtro) throws NotEncotradoException {
+        if(GestorClientes.cantidadClientes == 0){
+            throw new NotEncotradoException("Clientes no encontrados...");
+        }
+        System.out.printf("%-5s %-15s %-20s\n",
+                "ID", "NOMBRE", "EMAIL");
+        System.out.println("-".repeat(15*3));
+        for (Cliente c : clientes.filtrarClientes(filtro)) {
+            if (filtro.test(c)) {
+                System.out.printf("%-5d %-15s %-20s\n",
+                        c.getID(),
+                        c.getNombre(),
+                        c.getEmail()
+                );
+            }
+        }
+    }
+
+    public static void crearCliente() {
+        try {
+            Cliente c = registrarClientePorInput();
+            c.mostrarInformacion();
+            pausarConsola();
+            armarPedidoPorInput(c);
+        }catch (IllegalArgumentException e){
+            System.out.println(e.getMessage());
+        }finally {
+            printInfo("Operacion  finalizada...");
+        }
+    }
+
+
+    public static Cliente buscarClientePorInput() throws NotEncotradoException {
+        int Id = inputId();
+        return clientes.buscarPorID(Id);
+    }
+
+    public static void registrarClientes(ArrayList<Cliente> cs){
+        for(Cliente c : cs ){
+            clientes.agregar(c);
+        }
+    }
+
+}
