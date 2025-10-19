@@ -22,6 +22,9 @@ public class Cliente {
         cantidadClientes++;
     }
 
+    public int getId(){
+        return this.id;
+    }
     public String getNombre(){
         return this.nombre;
     }
@@ -39,17 +42,6 @@ public class Cliente {
 
     public void setNombre(String nombre){
         this.nombre = nombre;
-    }
-
-    public void mostrarInformacion(){
-        System.out.printf("%-15s %-15s %-15s\n",
-                "ID", "NOMBRE", "EMAIL");
-        System.out.println("-".repeat(15*3));
-        System.out.printf("%-15d %-15s %-15s\n",
-                this.id,
-                this.nombre,
-                this.email
-        );
     }
 
     public int getID() {

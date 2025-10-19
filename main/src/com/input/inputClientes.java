@@ -16,7 +16,7 @@ public class inputClientes {
     public static void buscarCliente(){
         try{
             Cliente c = buscarClientePorInput();
-            c.mostrarInformacion();
+            mostrarInformacion(c);
             pausarConsola();
             armarPedidoPorInput(c);
         }catch (NotEncotradoException e){
@@ -59,7 +59,7 @@ public class inputClientes {
     public static void crearCliente() {
         try {
             Cliente c = registrarClientePorInput();
-            c.mostrarInformacion();
+            mostrarInformacion(c);
             pausarConsola();
             armarPedidoPorInput(c);
         }catch (IllegalArgumentException e){
@@ -69,6 +69,16 @@ public class inputClientes {
         }
     }
 
+    public static void mostrarInformacion(Cliente c){
+        System.out.printf("%-15s %-15s %-15s\n",
+                "ID", "NOMBRE", "EMAIL");
+        System.out.println("-".repeat(15*3));
+        System.out.printf("%-15d %-15s %-15s\n",
+                c.getId(),
+                c.getNombre(),
+                c.getEmail()
+        );
+    }
 
     public static Cliente buscarClientePorInput() throws NotEncotradoException {
         int Id = inputId();
