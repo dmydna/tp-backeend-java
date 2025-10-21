@@ -1,22 +1,22 @@
-package com.input;
+package com.ui;
 
-import com.admin.GestorProductos;
+import com.servicio.GestorProductos;
 import com.excepciones.NotValidValueException;
 import com.excepciones.ProductoNotEncotradoException;
-import com.productos.Bebida;
-import com.productos.Cafe;
-import com.productos.Producto;
-import com.productos.Te;
+import com.modelo.Bebida;
+import com.modelo.Cafe;
+import com.modelo.Producto;
+import com.modelo.Te;
 
 import java.util.ArrayList;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import static com.Main.*;
-import static com.input.input.*;
+import static com.ui.Utils.*;
 
 
-public class inputProductos {
+public class ProductosHelper {
 
 
     public static Producto obtenerProductoPorInput() throws ProductoNotEncotradoException {
@@ -52,6 +52,7 @@ public class inputProductos {
     }
 
 
+    /** Muestra la lista productos disponibles, solicita un id  y devuelve un producto si es valido */
     public static Producto seleccionarProductoPorInput() throws ProductoNotEncotradoException {
         System.out.println("Selecciona un producto:");
         if(GestorProductos.cantidadProductos != 0){
@@ -63,15 +64,12 @@ public class inputProductos {
         throw new ProductoNotEncotradoException("Productos no encontrados...");
     }
 
+
     public static Producto crearProductoPorInput(String tipoProducto) throws NotValidValueException {
         String nombre = inputNombre();
         double precio = inputPrecio();
         int stock     = inputStock();
         int litros    = inputLitros();
-
-        if(precio<0 || stock <0 || litros <0) {
-            throw new NotValidValueException(ERROR_POSITIVO);
-        }
 
         return switch (tipoProducto) {
             case "Cafe" -> new Cafe(nombre, precio, stock, litros);
@@ -81,8 +79,8 @@ public class inputProductos {
     }
 
 
+/** Muestra la lista productos disponibles */
     public static void listarProductos(Predicate<Producto> filtro) throws ProductoNotEncotradoException {
-        int i = 0;
         if(GestorProductos.cantidadProductos == 0){
             throw new ProductoNotEncotradoException("No se encontraron Productos...");
         }

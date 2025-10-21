@@ -1,13 +1,12 @@
-package com.pedido;
+package com.modelo;
 
+import com.excepciones.ProductoNotEncotradoException;
 import com.excepciones.StockInsuficienteException;
-import com.productos.Producto;
-import com.cliente.Cliente;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-import static com.input.inputOld.printWarning;
+import static com.ui.Utils.printWarning;
 
 
 public class Pedido {
@@ -15,13 +14,13 @@ public class Pedido {
     // TODO Pasar a HashMap <id, ?<Cantidad c, Producto p>>
     // fix
     public class infoProducto {
-        // cantidad de producto en pedido
-        public   int id;
-        public   int cantidad;
+        // cantidad del producto en el pedido
+        public  int id;
+        public  int cantidad;
 
-        public infoProducto(int id, int cantidad){
+        public infoProducto(Producto p, int cantidad){
             this.cantidad = cantidad;
-            this.id = id;
+            this.id = p.getID();
         }
     }
 
@@ -72,10 +71,22 @@ public class Pedido {
         return this.productos.size();
     }
 
+
     public boolean agregarProducto(Producto p, int cantidad){
         try{
-            int stock = p.descontarStock(cantidad);
-            this.infoProductos.add(new infoProducto(p.getID(), stock));
+            p.descontarStock(cantidad);
+
+            // si existe producto actualiza su cantidad
+            if(this.infoProductos.stream().anyMatch(item -> item.id == p.getID())){
+                for (int i=0; i < this.infoProductos.size(); i++){
+                    if(this.infoProductos.get(i).id == p.getID()){
+                        this.infoProductos.get(i).cantidad += cantidad;
+                    };
+                };
+            }else {
+                this.infoProductos.add(new infoProducto(p, cantidad));
+            }
+
             productos.add(p);
             return true;
         }catch (StockInsuficienteException e){
@@ -95,19 +106,6 @@ public class Pedido {
 
     public int getID(){
         return this.id;
-    }
-
-
-
-    public void mostrarInformacion() {
-        System.out.printf("Cliente: %s, Email: %s\n", cliente.getNombre(), cliente.getEmail());
-        String listaProductos = this.productos
-                .stream()
-                .map(p -> "{ ID: " + p.getID() + ","  +
-                                    "TIPO: " + p.getNombre() +
-                                    "}")
-                .collect(Collectors.joining(", ", "[", "]"));
-        System.out.println(listaProductos);
     }
 
 }

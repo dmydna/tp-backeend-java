@@ -1,17 +1,16 @@
-package com.productos;
+package com.modelo;
 
-public class Cafe extends Producto {
+public class Te extends Producto {
 
 
-    public Cafe(String nombre, double precio, int cantidadEnStock, double volumenEnLitros){
+    public Te(String nombre, double precio, int cantidadEnStock, double volumenEnLitros){
         // Es el constructor de producto.
         // Mandanda parametros  al constructor para inicializarlos.
         super(nombre, precio, cantidadEnStock);
-        this.tipo = "CAFE";
+        this.tipo = "TE";
     }
 
     public double calcularPrecioFinal(){
-        return 0;
+        return 1;
     }
-
 }

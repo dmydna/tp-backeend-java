@@ -1,4 +1,4 @@
-package com.productos;
+package com.modelo;
 
 public class Bebida extends Producto implements Descontable {
 

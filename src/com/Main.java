@@ -1,11 +1,11 @@
 package com;
-import com.admin.GestorProductos;
-import com.admin.GestorClientes;
-import com.admin.GestorPedidos;
+import com.servicio.GestorProductos;
+import com.servicio.GestorClientes;
+import com.servicio.GestorPedidos;
 
 import java.util.Scanner;
 
-import static com.input.inputMenu.menu;
+import static com.ui.MenuPrincipal.menu;
 
 
 public class Main {

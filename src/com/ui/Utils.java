@@ -1,8 +1,14 @@
-package com.input;
+package com.ui;
 
 import static com.Main.sc;
 
-public class input {
+public class Utils {
+
+    /**
+     * Nota: La validación es  campo por campo en la consola.
+     * No se espera a completar todos los campos para chequear si hay errores,
+     * Esto se complementa con las validaciones en el constructor de las clases modelo.
+     */
 
     public static final String EMAIL_REGEX = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
 
@@ -14,8 +20,10 @@ public class input {
     public static final String ANSI_BLUE = "\u001B[34m";
 
     /** ERROR FORMATO */
-    public static final String ERROR_FLOAT_FORMATO = ("❌ ERROR: Ingresa solo números decimales válidos.");
-    public static final String ERROR_FORMATO  = ("❌ ERROR: Ingresa solo números enteros válidos.");
+
+    public static final String ERROR_VACIO = ("⚠️ ERROR: Este campo no puede estar vacío.");
+    public static final String ERROR_FLOAT_FORMATO = ("❌ ERROR: Ingresa números decimales válidos.");
+    public static final String ERROR_FORMATO  = ("❌ ERROR: Ingresa números enteros válidos.");
     public static final String ERROR_EMAIL_FORMATO = ("❌ ERROR: Ingresa un formato de email válido (ej: usuario@dominio.com).");
 
     /** ERROR */
@@ -25,12 +33,14 @@ public class input {
     public static final String ERROR_FLOAT_POSITIVO = ("⚠️ ERROR: Debe ser un número decimal positivo." );
 
     /** MENSAJES */
+    public static final String MSG_PRECIO = "Ingresa Precio: ";
     public static final String MSG_STOCK = "Ingresa Stock: ";
+    public static final String MSG_LITROS = "Ingresa Litros: ";
     public static final String MSG_CANTIDAD = "Ingresa Cantidad: ";
     public static final String MSG_ID = "Ingresa ID: ";
     public static final String MSG_NOMBRE = "Ingresa Nombre: ";
     public static final String MSG_EMAIL = "Ingresa Email: ";
-    public static final String ERROR_VACIO = ("⚠️ ERROR: Este campo no puede estar vacío.");
+
 
 
     /** PRINT COLORS */
@@ -100,16 +110,17 @@ public class input {
         return valor;
     }
 
-    public static String inputEmailTry() {
+    public static String inputEmailTry(String MSG, String MSG_Error) {
         String email;
         boolean formatoValido = false;
 
         do {
-            email = inputStringTry(MSG_EMAIL, ERROR_VACIO);
+            System.out.print(MSG);
+            email = sc.nextLine().trim();
             if (email.matches(EMAIL_REGEX)) {
                 formatoValido = true;
             } else {
-                printAttention(ERROR_EMAIL_FORMATO);
+                printAttention(MSG_Error);
             }
         } while (!formatoValido);
 
@@ -150,11 +161,11 @@ public class input {
     }
 
     public static double inputPrecio() {
-        return inputFloatPositivo(MSG_CANTIDAD, ERROR_FLOAT_POSITIVO, ERROR_FLOAT_FORMATO);
+        return inputFloatPositivo(MSG_PRECIO, ERROR_FLOAT_POSITIVO, ERROR_FLOAT_FORMATO);
     }
 
     public static int inputLitros() {
-        return inputIntegerPositivo(MSG_CANTIDAD, ERROR_POSITIVO, ERROR_FORMATO);
+        return inputIntegerPositivo(MSG_LITROS, ERROR_POSITIVO, ERROR_FORMATO);
     }
 
     public static String inputNombre() {
@@ -162,7 +173,7 @@ public class input {
     }
 
     public static String inputEmail() {
-        return inputEmailTry();
+        return inputEmailTry(MSG_EMAIL, ERROR_EMAIL_FORMATO);
     }
 
     public static void pausarConsola() {
@@ -171,8 +182,11 @@ public class input {
     }
 
     public  static boolean confirmarAccion(String mensaje){
-        System.out.println(mensaje + " s/n:");
-        String entrada = (sc.nextLine().trim());
+        String entrada;
+        do{
+            printAttention(mensaje + " s/n:");
+            entrada = (sc.nextLine().trim());
+        }while (!(entrada.equals("s") || entrada.equals("n")));
         return  entrada.equals("s");
     }
 

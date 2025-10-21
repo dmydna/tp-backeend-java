@@ -1,4 +1,4 @@
-package com.productos;
+package com.modelo;
 
 public class Comida extends Producto implements Descontable {
     private String fechaVencimiento;

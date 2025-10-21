@@ -1,22 +1,20 @@
-package com.input;
+package com.ui;
 
 import static com.Main.*;
-import static com.input.inputClientes.*;
-import static com.input.inputPedidos.*;
-import static com.input.inputProductos.*;
-import static com.input.input.*;
+import static com.ui.ClientesHelper.*;
+import static com.ui.PedidosHelper.*;
+import static com.ui.ProductosHelper.*;
+import static com.ui.Utils.*;
 
-import com.admin.*;
-import com.cliente.*;
+import com.servicio.*;
 import com.excepciones.*;
-import com.pedido.*;
-import com.productos.*;
+import com.modelo.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class inputMenu {
+public class MenuPrincipal {
 
     public  static void menu()  {
         String bloque = """
@@ -155,7 +153,7 @@ public class inputMenu {
     /** Crear un pedido */
     public static void CrearPedidoMenu(){
         try{
-            crearPedidoMenu();
+            validarPedidoMenu();
         }catch (NotEncotradoException e){
             printWarning(e.getMessage());
         }
@@ -189,7 +187,7 @@ public class inputMenu {
        }
     }
 
-    /** Agregar Muestra */
+    /** Agrega un conjunto de productos, pedidos y clientes */
     public static void AgregarMuestraMenu(){
 
         // Crea productos

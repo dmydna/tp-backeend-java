@@ -1,13 +1,13 @@
-package com.admin;
+package com.servicio;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 import com.excepciones.ProductoNotEncotradoException;
-import com.productos.Producto;
+import com.modelo.Producto;
 
-import static com.input.inputProductos.mostrarInformacion;
+import static com.ui.ProductosHelper.mostrarInformacion;
 
 public class GestorProductos {
 

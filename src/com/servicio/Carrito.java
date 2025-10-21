@@ -1,8 +1,8 @@
-package com.admin;
+package com.servicio;
 
 import com.excepciones.ProductoNotEncotradoException;
 import com.excepciones.StockInsuficienteException;
-import com.productos.Producto;
+import com.modelo.Producto;
 
 import java.util.ArrayList;
 

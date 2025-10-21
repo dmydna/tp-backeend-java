@@ -1,7 +1,7 @@
-package com.admin;
+package com.servicio;
 import com.excepciones.NotEncotradoException;
-import com.pedido.Pedido;
-import com.productos.Producto;
+import com.modelo.Pedido;
+import com.modelo.Producto;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -11,13 +11,14 @@ public class GestorPedidos {
     private final ArrayList<Pedido> pedidos = new ArrayList<>();
     public static int cantidadPedidos = 0;
 
+    /** Cuando se pide un ID corresponde al del Pedido */
+
     public void  agregar(Pedido p){
         this.pedidos.add(p);
         cantidadPedidos++;
     }
 
-
-    public void quitarPedido(int id) throws NotEncotradoException {
+    public void quitarPorId(int id) throws NotEncotradoException {
         boolean pedidoRemovido = this.pedidos
                 .removeIf(p -> p.getID() == id);
         if (pedidoRemovido) {
@@ -50,7 +51,7 @@ public class GestorPedidos {
         Optional<Pedido> pedido = this.pedidos.stream()
                 .filter(p -> p.getID() == id)
                 .findFirst();
-        if(!pedido.isPresent()){
+        if(pedido.isEmpty()){
             throw new NotEncotradoException("Producto no encontrados....");
         }
         return new ArrayList<>(pedido.get().getProductos());

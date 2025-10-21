@@ -1,25 +1,25 @@
-package com.input;
+package com.ui;
 
-import com.admin.GestorPedidos;
-import com.cliente.Cliente;
+import com.servicio.GestorPedidos;
+import com.modelo.Cliente;
 import com.excepciones.NotEncotradoException;
 import com.excepciones.ProductoNotEncotradoException;
-import com.pedido.Pedido;
-import com.productos.Producto;
+import com.modelo.Pedido;
+import com.modelo.Producto;
 
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
 import static com.Main.*;
-import static com.input.inputClientes.buscarCliente;
-import static com.input.inputClientes.crearCliente;
-import static com.input.input.*;
-import static com.input.inputProductos.seleccionarProductoPorInput;
+import static com.ui.ClientesHelper.buscarCliente;
+import static com.ui.ClientesHelper.crearCliente;
+import static com.ui.Utils.*;
+import static com.ui.ProductosHelper.seleccionarProductoPorInput;
 
-public class inputPedidos {
+public class PedidosHelper {
 
-    // crea un pedido vacio
-    public static  void crearPedidoMenu() throws NotEncotradoException {
+    /** Solicita por input un cliente valido, para crear un pedido nuevo */
+    public static  void validarPedidoMenu() throws NotEncotradoException {
 
         boolean salir = false;
         while (!salir){
@@ -45,7 +45,7 @@ public class inputPedidos {
     }
 
 
-    // agrega productos al pedido
+    /** Dado un cliente valido, agrega productos al pedido */
     public static void armarPedidoPorInput(Cliente c) {
         Pedido pedido = new Pedido(c);
         boolean salir= false;
@@ -84,6 +84,7 @@ public class inputPedidos {
         System.out.println();
     }
 
+    // Lista productos de un pedido (pide id del pedido)
     public static void listarProductosEnPedido(int id) throws NotEncotradoException {
         Pedido pedido = pedidos.buscarPorID(id);
 

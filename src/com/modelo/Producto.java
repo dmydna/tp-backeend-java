@@ -1,6 +1,6 @@
-package com.productos;
+package com.modelo;
 import com.excepciones.StockInsuficienteException;
-import static com.input.input.*;
+import static com.ui.Utils.*;
 
 public  abstract class Producto {
 
@@ -20,8 +20,10 @@ public  abstract class Producto {
             throw new IllegalArgumentException(ERROR_VACIO);
         }
         if(cantidadEnStock < 0 || precio < 0){
-            String MENSAJE = precio < 0 ? ERROR_FLOAT_POSITIVO : ERROR_POSITIVO;
-            throw new IllegalArgumentException(MENSAJE);
+            if (cantidadEnStock < 0) {
+                throw new IllegalArgumentException(ERROR_POSITIVO);
+            }
+            throw new IllegalArgumentException(ERROR_FLOAT_POSITIVO);
         }
 
         this.nombre = nombre;

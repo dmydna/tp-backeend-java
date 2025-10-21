@@ -1,10 +1,11 @@
-package com.admin;
-import com.cliente.Cliente;
+package com.servicio;
+import com.modelo.Cliente;
 import com.excepciones.NotEncotradoException;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
 public class GestorClientes {
+
     private final ArrayList<Cliente> clientes = new ArrayList<>();
     public static int cantidadClientes = 0;
 

@@ -1,17 +1,17 @@
-package com.input;
+package com.ui;
 
-import com.admin.GestorClientes;
-import com.cliente.Cliente;
+import com.servicio.GestorClientes;
+import com.modelo.Cliente;
 import com.excepciones.NotEncotradoException;
 
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
 import static com.Main.*;
-import static com.input.inputPedidos.armarPedidoPorInput;
-import static com.input.input.*;
+import static com.ui.PedidosHelper.armarPedidoPorInput;
+import static com.ui.Utils.*;
 
-public class inputClientes {
+public class ClientesHelper {
 
     public static void buscarCliente(){
         try{
@@ -38,6 +38,7 @@ public class inputClientes {
     }
 
 
+    /** Muestra una lista de clientes por consola segun filtro */
     public static void listarClientes(Predicate<Cliente> filtro) throws NotEncotradoException {
         if(GestorClientes.cantidadClientes == 0){
             throw new NotEncotradoException("Clientes no encontrados...");

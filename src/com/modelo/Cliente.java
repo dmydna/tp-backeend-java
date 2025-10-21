@@ -1,6 +1,6 @@
-package com.cliente;
+package com.modelo;
 
-import static com.input.input.*;
+import static com.ui.Utils.*;
 
 public class Cliente {
 

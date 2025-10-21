@@ -1,4 +1,4 @@
-package com.productos;
+package com.modelo;
 
 // Declara los metodos que las clases deberan implementar
 
